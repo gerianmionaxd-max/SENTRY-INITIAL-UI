@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!-- Guard Portal: mobile-first UI for security guards. -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sentry Guard Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="guard-mobile.css">
+</head>
+<body>
+  <!-- Mock login screen -->
+  <section class="login-screen" id="loginScreen">
+    <div class="login-card"><img src="images/1568-logo-1781901055.317-00a3e4-color.webp" alt="Sentry logo"><p>GUARD PORTAL</p><h1>Welcome, guard</h1><span>Sign in to view your verified attendance and schedule.</span><form id="guardLogin"><label>Guard ID<input value="SG-2024-0241" required></label><label>Password<input type="password" value="leojimenez" required></label><button type="submit">Log in</button></form><small>Demo account: Leo Jimenez</small></div>
+  </section>
+
+  <main class="phone-app" id="phoneApp" hidden>
+    <header><div class="brand"><img src="images/1568-logo-1781901055.317-00a3e4-color.webp" alt="Sentry">SENTRY</div><button class="notification" id="notifications" type="button" aria-label="Notifications">◌</button></header>
+
+    <!-- Home / QR code -->
+    <section class="screen active" id="homeScreen">
+      <div class="welcome"><div><p>GOOD MORNING</p><h1>Leo Jimenez</h1><span>SG-2024-0241</span></div><img src="images/LJ.webp" alt="Leo Jimenez"></div>
+      <article class="shift-card"><span class="status-dot">● On shift</span><h2>Macario-Catalina Building</h2><p>Gate post · Day shift</p><div><b>07:00 AM</b><i></i><b>03:00 PM</b></div></article>
+      <article class="qr-card"><div class="section-title"><div><h2>Dynamic QR code</h2><p>Generate a code, then show it when time-in or time-out is required.</p></div></div><div class="qr-wrap"><img class="dynamic-qr" id="dynamicQr" alt="Dynamic time-in QR code"></div><strong id="qrToken">No active QR code</strong><small id="qrHint">Each code is valid for 30 seconds</small></article>
+      <button class="primary-action qr-generate" id="refreshQr" type="button"><span>Generate dynamic QR</span><b id="qrTimer">00:30</b></button>
+    </section>
+
+    <!-- Personal attendance -->
+    <section class="screen" id="attendanceScreen"><h1>My attendance</h1><p class="screen-subtitle">Your verified time and attendance records.</p><div class="attendance-summary"><div><b>88%</b><span>Monthly attendance</span></div><div><b>1</b><span>Late record</span></div></div><div class="record-list"><article><div><strong>Today · 10 Aug</strong><span>Macario-Catalina Building</span></div><b>07:03 AM<small class="late">Late</small></b></article><article><div><strong>Fri · 07 Aug</strong><span>Macario-Catalina Building</span></div><b>06:55 AM<small>On time</small></b></article><article><div><strong>Thu · 06 Aug</strong><span>Macario-Catalina Building</span></div><b>06:58 AM<small>On time</small></b></article></div></section>
+
+    <!-- Personal schedule -->
+    <section class="screen" id="scheduleScreen"><h1>My schedule</h1><p class="screen-subtitle">Your assigned shifts for this week.</p><article class="schedule-main"><p>TODAY · MONDAY</p><h2>Macario-Catalina Building</h2><span>Gate post · 07:00 AM – 03:00 PM</span><b>Current assignment</b></article><div class="schedule-list"><article><span>TUE<br><b>11</b></span><div><strong>Macario-Catalina Building</strong><small>Day shift · 07:00 AM – 03:00 PM</small></div></article><article><span>WED<br><b>12</b></span><div><strong>Macario-Catalina Building</strong><small>Day shift · 07:00 AM – 03:00 PM</small></div></article><article><span>THU<br><b>13</b></span><div><strong>Rest day</strong><small>No assigned shift</small></div></article></div></section>
+
+    <!-- Personal profile -->
+    <section class="screen" id="profileScreen"><h1>My profile</h1><p class="screen-subtitle">Registered information for your guard account.</p><div class="profile-card"><img src="images/LJ.webp" alt="Leo Jimenez"><h2>Leo Jimenez</h2><p>Verified security guard</p><span>● Active</span></div><div class="profile-info"><div><span>Guard ID</span><b>SG-2024-0241</b></div><div><span>Assigned post</span><b>Macario-Catalina Building</b></div><div><span>Contact number</span><b>+63 917 555 0241</b></div><div><span>Email address</span><b>leo.jimenez@sentry.ph</b></div></div><button class="outline-action" id="editProfile" type="button">Edit profile information</button></section>
+
+    <nav class="bottom-nav"><button class="active" data-screen="homeScreen" type="button"><span>▦</span>Home</button><button data-screen="attendanceScreen" type="button"><span>◷</span>Attendance</button><button data-screen="scheduleScreen" type="button"><span>▤</span>Schedule</button><button data-screen="profileScreen" type="button"><span>◉</span>Profile</button></nav>
+  </main>
+  <div class="toast" id="guardToast"></div>
+  <div class="guard-modal" id="profileModal" hidden><form id="profileForm"><button class="close-modal" id="closeProfileModal" type="button">×</button><p>PROFILE REQUEST</p><h2>Update contact information</h2><label>Contact number<input id="profilePhone" value="+63 917 555 0241" required></label><label>Email address<input id="profileEmail" type="email" value="leo.jimenez@sentry.ph" required></label><button type="submit">Submit update request</button></form></div>
+  <script src="guard-mobile.js"></script>
+</body>
+</html>
