@@ -17,26 +17,44 @@
 </head>
 <body>
   <section class="auth-screen" id="authScreen" aria-labelledby="authTitle">
-    <div class="auth-panel">
-      <div class="auth-logo"><img src="images/1568-logo-1781901055.317-00a3e4-color.webp" alt="Sentry logo"> SENTRY</div>
-      <p class="auth-kicker">SECURITY OPERATIONS</p>
-      <h1 id="authTitle">Welcome back</h1>
-      <p class="auth-copy" id="authCopy">Sign in to access the attendance dashboard.</p>
-      <form id="authForm">
-        <label id="nameField" hidden>Full name<input id="authName" type="text" autocomplete="name" placeholder="Enter your full name"></label>
-        <label>Work email<input id="authEmail" type="email" autocomplete="email" placeholder="you@company.com" required></label>
-        <label>Password<input id="authPassword" type="password" autocomplete="current-password" placeholder="Enter your password" minlength="6" required></label>
-        <button class="auth-submit" type="submit" id="authSubmit">Log in</button>
-      </form>
-      <p class="auth-switch" id="authSwitch">New to Sentry? <button type="button" id="toggleAuth">Sign up</button></p>
-      <p class="auth-message" id="authMessage" aria-live="polite"></p>
+    <div class="auth-shell">
+      <section class="auth-brand" aria-label="Sentry attendance system">
+        <img class="auth-brand-watermark" src="images/1568-logo-1781901055.317-00a3e4-color.webp" alt="">
+        <div class="auth-brand-content"><p class="auth-brand-kicker">SENTRY SYSTEM</p><h2>SENTRY</h2><p>Smart staff attendance monitoring with secure, dynamic QR verification.</p></div>
+        <small>© 2026 Sentry Attendance System</small>
+      </section>
+      <div class="auth-panel">
+        <div class="auth-logo"><img src="images/1568-logo-1781901055.317-00a3e4-color.webp" alt="Sentry logo"> SENTRY</div>
+        <p class="auth-kicker">SECURITY OPERATIONS</p>
+        <h1 id="authTitle">Welcome back</h1>
+        <p class="auth-copy" id="authCopy">Sign in to access the attendance dashboard.</p>
+        <form class="auth-form" id="loginForm">
+          <label>Username or email<input id="authIdentity" name="identity" type="text" autocomplete="username" placeholder="Enter username or email" required></label>
+          <label>Password<input id="authPassword" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" minlength="6" required></label>
+          <label class="remember-option"><input id="rememberMe" name="remember" type="checkbox"> <span>Remember me on this device</span></label>
+          <button class="auth-submit" type="submit">Log in</button>
+        </form>
+        <form class="auth-form" id="registrationForm" hidden>
+          <label>Username<input name="username" type="text" autocomplete="username" placeholder="Choose a username" required></label>
+          <label>Email address<input name="email" type="email" autocomplete="email" placeholder="you@company.com" required></label>
+          <label>Department<select name="department" required><option value="" selected disabled>Select your department</option><option>Security</option><option>Human Resources</option><option>Payroll</option></select></label>
+          <label>Initial password<input name="password" type="password" autocomplete="new-password" placeholder="Minimum 6 characters" minlength="6" required></label>
+          <p class="registration-note">New accounts are submitted as <strong>Pending</strong> and require administrator approval before you can log in.</p>
+          <button class="auth-submit" type="submit">Submit account request</button>
+        </form>
+        <p class="auth-switch" id="authSwitch">Need a staff account? <button type="button" id="showRegistration">Request one</button></p>
+        <p class="auth-message" id="authMessage" aria-live="polite"></p>
+      </div>
     </div>
   </section>
   <!-- Dashboard navigation -->
   <aside class="sidebar">
     <div class="brand"><span class="brand-mark"><img src="images/1568-logo-1781901055.317-00a3e4-color.webp" alt="Sentry logo"></span><span>SENTRY</span></div>
     <nav>
-      <a href="#" class="nav-item active"><span>▣</span><b>Attendance</b></a>
+      <a href="#" class="nav-item active" id="attendanceNav"><span>▣</span><b>Attendance</b></a>
+      <a href="#" class="nav-item" id="hrPanelNav"><span>♙</span><b>HR Staff</b></a>
+      <a href="#" class="nav-item" id="payrollPanelNav"><span>₱</span><b>Payroll Staff</b></a>
+      <a href="#" class="nav-item" id="adminPanelNav"><span>◈</span><b>Admin Analytics</b></a>
     </nav>
     <div class="sidebar-bottom">
       <a href="#" class="nav-item"><span>⚙</span><b>Settings</b></a>
@@ -47,6 +65,47 @@
   <!-- Main dashboard content -->
   <main>
     <section class="page-heading"><div><p class="company-name">Z-James Security Agency</p><p class="eyebrow">MONDAY, 10 AUGUST 2026</p><h1>Attendance Monitor</h1><p class="subtitle">Monitor guard attendance, shift coverage, and verification in real time.</p></div><div class="qr-lookup"><span>⌕</span><input id="qrSearch" placeholder="Enter guard QR ID" /><button id="qrSearchBtn">Search</button></div></section>
+
+    <!-- HR Staff workspace: based on the system workflow diagram -->
+    <section class="hr-panel" id="hrPanel" hidden>
+      <div class="hr-heading"><div><p class="eyebrow">HUMAN RESOURCES</p><h1>HR Staff Panel</h1><p>Manage personnel records, attendance concerns, and operational requests.</p></div><button class="hr-primary" id="addEmployee" type="button">+ Add employee</button></div>
+      <div class="hr-overview">
+        <article><span>Registered guards</span><strong id="hrRegisteredGuardCount">5</strong><small>Current guard records</small></article>
+        <article><span>Attendance exceptions</span><strong id="hrExceptionCount">2</strong><small id="hrExceptionNote">1 late · 1 absent today</small></article>
+        <article><span>Pending accounts</span><strong id="hrPendingAccountCount">0</strong><small>Awaiting administrator approval</small></article>
+        <article><span>Policy acknowledgements</span><strong>—</strong><small>No policy records yet</small></article>
+      </div>
+      <div class="hr-workspace">
+        <article class="hr-feature"><div><p class="eyebrow">PRIORITY TASKS</p><h2>Today’s HR workflow</h2><p>Review attendance activity and respond to personnel requests.</p></div><div class="hr-task-list"><button type="button"><span class="task-icon blue">◫</span><span><strong>Attendance logs</strong><small>Review QR time-in and time-out records</small></span><b><span id="hrAttendanceRecordCount">5</span> records →</b></button><button type="button"><span class="task-icon amber">!</span><span><strong>Exception reports</strong><small>Late arrivals, absences, and missed scans</small></span><b><span id="hrExceptionTaskCount">2</span> open →</b></button><button type="button"><span class="task-icon violet">✓</span><span><strong>Policy updates</strong><small>Publish and track staff acknowledgements</small></span><b>No updates</b></button></div></article>
+        <aside class="hr-side"><article><h2>Employee information</h2><p>Search or update guard registrations.</p><div class="employee-search">⌕ <input placeholder="Search employee name or ID"></div><button class="hr-link" type="button">Open employee directory →</button></article><article><h2>Requests awaiting review</h2><div class="request-row"><span>Payroll processing</span><b>05</b></div><div class="request-row"><span>Overtime / leave adjustments</span><b>03</b></div><button class="hr-link" type="button">View all requests →</button></article></aside>
+      </div>
+    </section>
+
+    </section>
+
+    <section class="hr-quick-actions" id="hrActions" hidden aria-label="HR staff actions">
+      <h2>HR Staff actions</h2>
+      <p>Choose a task to manage guard records and attendance.</p>
+      <div class="hr-action-grid">
+        <button type="button" data-hr-action="profiles">View guard profiles</button><button type="button" data-hr-action="add">Add new guards / employees</button><button type="button" data-hr-action="edit">Edit employee information</button><button type="button" data-hr-action="status">Activate / deactivate employees</button><button type="button" data-hr-action="id">Assign employee ID</button><button type="button" data-hr-action="schedule">Manage schedules / shifts</button><button type="button" data-hr-action="attendance">View attendance</button><button type="button" data-hr-action="exceptions">Review late / absent records</button><button type="button" data-hr-action="report">Generate attendance reports</button><button type="button" data-hr-action="correct">Correct attendance records</button>
+      </div>
+    </section>
+
+    <!-- Payroll workspace: processes validated attendance into payroll records -->
+    <section class="payroll-panel" id="payrollPanel" hidden>
+      <div class="hr-heading"><div><p class="eyebrow">PAYROLL OPERATIONS</p><h1>Payroll Staff Panel</h1><p>Process attendance-based pay, overtime, leave, and payroll reports.</p></div><button class="hr-primary" id="createPayroll" type="button">+ Create payroll run</button></div>
+      <div class="hr-overview"><article><span>Validated attendance records</span><strong id="payrollValidatedCount">4</strong><small>QR records ready for processing</small></article><article><span>Overtime adjustments</span><strong>—</strong><small>No adjustments recorded</small></article><article><span>Leave adjustments</span><strong>—</strong><small>No adjustments recorded</small></article><article><span>Payroll reports</span><strong>—</strong><small>No reports generated yet</small></article></div>
+      <div class="hr-workspace"><article class="hr-feature"><div><p class="eyebrow">PAYROLL WORKFLOW</p><h2>Process staff payments</h2><p>Review attendance data before producing payroll-ready reports.</p></div><div class="hr-task-list"><button data-payroll-action="validated" type="button"><span class="task-icon blue">✓</span><span><strong>Validated attendance data</strong><small>Review approved time and attendance records</small></span><b><span id="payrollTaskCount">4</span> records →</b></button><button data-payroll-action="overtime" type="button"><span class="task-icon amber">+</span><span><strong>Overtime / leave adjustments</strong><small>Apply approved changes to payroll totals</small></span><b>No requests</b></button><button data-payroll-action="reports" type="button"><span class="task-icon violet">▤</span><span><strong>Payroll-ready reports</strong><small>Generate a report for the current pay period</small></span><b>Generate →</b></button></div></article><aside class="hr-side"><article><h2>Current pay period</h2><p>01 Aug – 15 Aug 2026</p><div class="request-row"><span>Estimated payroll</span><b>—</b></div><div class="request-row"><span>Processing status</span><b>Not started</b></div><button class="hr-link" data-payroll-action="run" type="button">Review payroll run →</button></article><article><h2>Quick actions</h2><button class="hr-link" data-payroll-action="overtime" type="button">Manage adjustments →</button><br><button class="hr-link" data-payroll-action="reports" type="button">Download payroll report →</button></article></aside></div>
+    </section>
+
+    <!-- Admin-only analytics: high-level system metrics and alerts -->
+    <section class="admin-panel" id="adminPanel" hidden>
+      <div class="hr-heading"><div><p class="eyebrow">ADMINISTRATOR VIEW</p><h1>Analytics Dashboard</h1><p>Monitor attendance performance, exceptions, and system activity.</p></div><button class="hr-primary" id="exportAnalytics" type="button">Export summary</button></div>
+      <div class="hr-overview"><article><span>Attendance rate</span><strong id="adminAttendanceRate">60%</strong><small>3 of 5 guards on duty</small></article><article><span>On-duty coverage</span><strong id="adminOnDutyCount">3</strong><small id="adminCoverageNote">Of 5 current guards</small></article><article><span>Open exceptions</span><strong id="adminExceptionCount">2</strong><small id="adminExceptionNote">1 late · 1 absent</small></article><article><span>QR verification</span><strong id="adminVerificationRate">80%</strong><small>4 of 5 guards checked in</small></article></div>
+      <article class="pending-accounts-card"><div class="pending-accounts-head"><div><p class="eyebrow">ACCOUNT MANAGEMENT</p><h2>Pending account requests <span id="pendingAccountCount">0</span></h2><p>Approve staff accounts before they can access the system.</p></div></div><div class="pending-table-wrap"><table class="pending-accounts-table"><thead><tr><th>USER ID</th><th>USERNAME</th><th>EMAIL</th><th>DEPARTMENT</th><th>STATUS</th><th>ACTIONS</th></tr></thead><tbody id="pendingAccountRows"></tbody></table></div></article>
+      <article class="access-assignment-card"><div><p class="eyebrow">ROLE &amp; ACCESS ASSIGNMENT</p><h2>Department-based access</h2><p>Access rights are assigned automatically when an account is approved.</p></div><form id="accessAssignmentForm" class="access-assignment-form"><label>User ID<select id="accessUserId" required><option value="" selected>Select an active user</option></select></label><fieldset><legend>Access rights</legend><div class="assignment-rights"><label><input id="accessRead" type="checkbox" disabled> Read</label><label><input id="accessWrite" type="checkbox" disabled> Write</label><label><input id="accessExecute" type="checkbox" disabled> Execute</label><label><input id="accessAdmin" type="checkbox" disabled> Admin</label></div></fieldset><label>Expiration date <span>Optional</span><input id="accessExpiration" type="date"></label><button class="hr-primary" type="submit">Save expiration date</button></form></article>
+      <div class="analytics-grid"><article class="analytics-card trend-card"><div><h2>Attendance trend</h2><p>Verified daily time-ins this week</p></div><div class="bar-chart" aria-label="Attendance chart"><div><i style="height:63%"></i><span>Mon</span></div><div><i style="height:78%"></i><span>Tue</span></div><div><i style="height:70%"></i><span>Wed</span></div><div><i style="height:88%"></i><span>Thu</span></div><div><i style="height:92%"></i><span>Fri</span></div></div></article><article class="analytics-card"><h2>Exception breakdown</h2><p>Records requiring attention today</p><div class="metric-row"><span><i class="metric-dot late-dot"></i>Late arrivals</span><b id="adminLateCount">1</b></div><div class="metric-row"><span><i class="metric-dot absent-dot"></i>Absent / no scan</span><b id="adminAbsentCount">1</b></div><button class="hr-link" id="reviewExceptions" type="button">Review exceptions →</button></article><article class="analytics-card activity-card"><h2>Recent activity</h2><p>Latest system events</p><div class="activity-row"><b>QR time-in verified</b><span>Ramon Santos · 06:42 AM</span></div><div class="activity-row"><b>Attendance correction requested</b><span>Leo Jimenez · 07:03 AM</span></div><div class="activity-row"><b>Payroll report generated</b><span>Aug 1–15 period · 08:15 AM</span></div></article></div>
+    </section>
 
     <!-- Personnel carousel: cards are filled with the guard information below -->
     <section class="personnel-section">
@@ -60,17 +119,17 @@
       </div>
     </section>
     <section class="stats old-stats">
-      <article class="stat-card blue"><div class="stat-icon">✓</div><div><span class="stat-label">On duty</span><strong>128</strong><small><em>↑ 4.6%</em> from yesterday</small></div><div class="sparkline">▁▃▂▄▅▃▆</div></article>
-      <article class="stat-card amber"><div class="stat-icon">◷</div><div><span class="stat-label">Late time-ins</span><strong>07</strong><small><em>↓ 2.1%</em> from yesterday</small></div><div class="sparkline">▂▁▃▂▄▂▁</div></article>
-      <article class="stat-card rose"><div class="stat-icon">−</div><div><span class="stat-label">No-show / absent</span><strong>12</strong><small><em>↓ 1.8%</em> from yesterday</small></div><div class="sparkline">▆▄▅▂▃▁▂</div></article>
-      <article class="stat-card purple"><div class="stat-icon">⌘</div><div><span class="stat-label">Verified records</span><strong>91.4%</strong><small><em>↑ 3.2%</em> this month</small></div><div class="ring"><b>91%</b></div></article>
+      <article class="stat-card blue"><div class="stat-icon">✓</div><div><span class="stat-label">On duty</span><strong id="onDutyStat">3</strong><small>Current guard records</small></div><div class="sparkline">▁▃▂▄▅</div></article>
+      <article class="stat-card amber"><div class="stat-icon">◷</div><div><span class="stat-label">Late time-ins</span><strong id="lateStat">1</strong><small>Current guard records</small></div><div class="sparkline">▂▁▃▂▄</div></article>
+      <article class="stat-card rose"><div class="stat-icon">−</div><div><span class="stat-label">No-show / absent</span><strong id="absentStat">1</strong><small>Current guard records</small></div><div class="sparkline">▆▄▅▂▃</div></article>
+      <article class="stat-card purple"><div class="stat-icon">⌘</div><div><span class="stat-label">QR check-ins</span><strong id="verifiedStat">4</strong><small>Recorded today</small></div><div class="ring"><b id="verifiedRing">4</b></div></article>
     </section>
 
     <!-- Attendance records, scanner, and upcoming handovers -->
     <section class="content-grid">
       <div class="attendance-card panel">
         <div class="panel-head"><div><h2>Today’s attendance log</h2><p>Live QR-based time-in activity</p></div><button class="text-button" id="viewAll">View all <span>→</span></button></div>
-        <div class="filters"><button class="filter active" data-filter="all">All <span>147</span></button><button class="filter" data-filter="present">On duty <span>128</span></button><button class="filter" data-filter="late">Late <span>7</span></button><button class="filter" data-filter="absent">Absent <span>12</span></button><button class="date-button">▣ &nbsp; 10 Aug, 2026 &nbsp;⌄</button></div>
+        <div class="filters"><button class="filter active" data-filter="all">All <span id="allFilterCount">5</span></button><button class="filter" data-filter="present">On duty <span id="presentFilterCount">3</span></button><button class="filter" data-filter="late">Late <span id="lateFilterCount">1</span></button><button class="filter" data-filter="absent">Absent <span id="absentFilterCount">1</span></button><button class="date-button">▣ &nbsp; 10 Aug, 2026 &nbsp;⌄</button></div>
         <div class="table-wrap"><table><thead><tr><th>PERSONNEL</th><th>ASSIGNED POST</th><th>TIME IN / OUT</th><th>STATUS</th><th></th></tr></thead><tbody id="attendanceRows">
           <tr data-status="present" data-qr="SG-2024-0182"><td><div class="person"><div class="avatar"><img src="images/SP.jpg"></div><div><strong>Ramon Santos</strong><small>SG-2024-0182</small></div></div></td><td><strong>Trinitarian Centre</strong><small>Main entrance · Day shift</small></td><td><strong>06:42 AM</strong><small>QR time-in · Out: 03:00 PM</small></td><td><span class="status present">● On duty</span></td><td><button class="more">•••</button></td></tr>
           <tr data-status="present" data-qr="SG-2024-0097"><td><div class="person"><div class="avatar"><img src="images/RW.png"></div><div><strong>Ricardo Williams</strong><small>SG-2024-0097</small></div></div></td><td><strong>Trinidad Complex</strong><small>Lobby post · Day shift</small></td><td><strong>06:39 AM</strong><small>QR time-in · Out: 03:00 PM</small></td><td><span class="status present">● On duty</span></td><td><button class="more">•••</button></td></tr>
@@ -101,6 +160,9 @@
       <div class="scanner-frame" aria-hidden="true"></div>
       <footer><h2 id="scannerTitle">Scan guard QR code</h2><p id="scannerMessage">Allow camera access, then position the QR code within the frame.</p></footer>
     </div>
+  </div>
+  <div class="hr-action-modal" id="hrActionModal" role="dialog" aria-modal="true" aria-labelledby="hrActionTitle" hidden>
+    <div class="hr-action-dialog"><button class="modal-close" id="closeHrAction" type="button" aria-label="Close HR action">×</button><p class="eyebrow">HR STAFF WORKSPACE</p><h2 id="hrActionTitle"></h2><p id="hrActionDescription"></p><div id="hrActionContent"></div></div>
   </div>
   <div class="toast" id="toast">QR scanner is ready to launch</div>
   <script src="script.js"></script>

@@ -13,7 +13,11 @@
 <body>
   <!-- Mock login screen -->
   <section class="login-screen" id="loginScreen">
+<<<<<<< HEAD
     <div class="login-card"><img src="images/1568-logo-1781901055.317-00a3e4-color.webp" alt="Sentry logo"><p>GUARD PORTAL</p><h1>Welcome, guard</h1><span>Sign in to view your verified attendance and schedule.</span><form id="guardLogin"><label>Guard ID<input value="SG-2024-0241" required></label><label>Password<input type="password" value="leojimenez" required></label><button type="submit">Log in</button></form><small>Demo account: Leo Jimenez</small></div>
+=======
+    <div class="login-card"><img src="images/1568-logo-1781901055.317-00a3e4-color.webp" alt="Sentry logo"><p>GUARD PORTAL</p><h1>Welcome, guard</h1><span>Sign in to view your verified attendance and schedule.</span><form id="guardLogin"><label>Username or email<input id="guardIdentity" autocomplete="username" placeholder="Enter your username or email" required></label><label>Password<input id="guardPassword" type="password" autocomplete="current-password" placeholder="Enter your password" required></label><button type="submit">Log in</button></form><p class="login-message" id="guardLoginMessage" aria-live="polite"></p><small>Demo account: leo · Leo Jimenez</small></div>
+>>>>>>> 70fdd62 (updated source codes hehe)
   </section>
 
   <main class="phone-app" id="phoneApp" hidden>
@@ -21,7 +25,11 @@
 
     <!-- Home / QR code -->
     <section class="screen active" id="homeScreen">
+<<<<<<< HEAD
       <div class="welcome"><div><p>GOOD MORNING</p><h1>Leo Jimenez</h1><span>SG-2024-0241</span></div><img src="images/LJ.webp" alt="Leo Jimenez"></div>
+=======
+      <div class="welcome"><div><p>GOOD MORNING</p><h1 id="guardWelcomeName">Leo Jimenez</h1><span id="guardWelcomeId">SG-2024-0241</span></div><img id="guardWelcomeImage" src="images/LJ.webp" alt="Leo Jimenez"></div>
+>>>>>>> 70fdd62 (updated source codes hehe)
       <article class="shift-card"><span class="status-dot">● On shift</span><h2>Macario-Catalina Building</h2><p>Gate post · Day shift</p><div><b>07:00 AM</b><i></i><b>03:00 PM</b></div></article>
       <article class="qr-card"><div class="section-title"><div><h2>Dynamic QR code</h2><p>Generate a code, then show it when time-in or time-out is required.</p></div></div><div class="qr-wrap"><img class="dynamic-qr" id="dynamicQr" alt="Dynamic time-in QR code"></div><strong id="qrToken">No active QR code</strong><small id="qrHint">Each code is valid for 30 seconds</small></article>
       <button class="primary-action qr-generate" id="refreshQr" type="button"><span>Generate dynamic QR</span><b id="qrTimer">00:30</b></button>
@@ -34,7 +42,11 @@
     <section class="screen" id="scheduleScreen"><h1>My schedule</h1><p class="screen-subtitle">Your assigned shifts for this week.</p><article class="schedule-main"><p>TODAY · MONDAY</p><h2>Macario-Catalina Building</h2><span>Gate post · 07:00 AM – 03:00 PM</span><b>Current assignment</b></article><div class="schedule-list"><article><span>TUE<br><b>11</b></span><div><strong>Macario-Catalina Building</strong><small>Day shift · 07:00 AM – 03:00 PM</small></div></article><article><span>WED<br><b>12</b></span><div><strong>Macario-Catalina Building</strong><small>Day shift · 07:00 AM – 03:00 PM</small></div></article><article><span>THU<br><b>13</b></span><div><strong>Rest day</strong><small>No assigned shift</small></div></article></div></section>
 
     <!-- Personal profile -->
+<<<<<<< HEAD
     <section class="screen" id="profileScreen"><h1>My profile</h1><p class="screen-subtitle">Registered information for your guard account.</p><div class="profile-card"><img src="images/LJ.webp" alt="Leo Jimenez"><h2>Leo Jimenez</h2><p>Verified security guard</p><span>● Active</span></div><div class="profile-info"><div><span>Guard ID</span><b>SG-2024-0241</b></div><div><span>Assigned post</span><b>Macario-Catalina Building</b></div><div><span>Contact number</span><b>+63 917 555 0241</b></div><div><span>Email address</span><b>leo.jimenez@sentry.ph</b></div></div><button class="outline-action" id="editProfile" type="button">Edit profile information</button></section>
+=======
+    <section class="screen" id="profileScreen"><h1>My profile</h1><p class="screen-subtitle">Registered information for your guard account.</p><div class="profile-card"><img id="guardProfileImage" src="images/LJ.webp" alt="Leo Jimenez"><h2 id="guardProfileName">Leo Jimenez</h2><p>Verified security guard</p><span>● Active</span></div><div class="profile-info"><div><span>Guard ID / User ID</span><b id="guardProfileId">SG-2024-0241</b></div><div><span>Assigned post</span><b id="guardProfilePost">Macario-Catalina Building</b></div><div><span>Contact number</span><b>+63 917 555 0241</b></div><div><span>Email address</span><b id="guardProfileEmail">leo.jimenez@sentry.ph</b></div></div><button class="outline-action" id="editProfile" type="button">Edit profile information</button></section>
+>>>>>>> 70fdd62 (updated source codes hehe)
 
     <nav class="bottom-nav"><button class="active" data-screen="homeScreen" type="button"><span>▦</span>Home</button><button data-screen="attendanceScreen" type="button"><span>◷</span>Attendance</button><button data-screen="scheduleScreen" type="button"><span>▤</span>Schedule</button><button data-screen="profileScreen" type="button"><span>◉</span>Profile</button></nav>
   </main>
